@@ -28,9 +28,8 @@ const App = () => {
     try {
       const response = await axios.get(`http://localhost:3001/balance/${address}`);
       setBalance(response.data.balance);
-      setFlag2(true)
+      setFlag2(true);
       setBalance(5);
-
     } catch (error) {
       console.error('Error fetching balance:', error);
     }
@@ -88,45 +87,98 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>MyCoin</h1>
 
-      <h2>Tạo Ví</h2>
-      <button onClick={createWallet}>Tạo Ví Mới</button>
-      {address && (
-        <div>
-          <p>Địa chỉ: {address}</p>
-          <p>Khóa Riêng: {privateKey}</p>
-        </div>
-      )}
+      <div className="section">
+        <h2 className="section-title">Tạo Ví</h2>
+        <button onClick={createWallet}>Tạo Ví Mới</button>
+        {address && (
+          <div>
+            <p>Địa chỉ: {address}</p>
+            <p>Khóa Riêng: {privateKey}</p>
+          </div>
+        )}
+      </div>
 
-      <h2>Thống kê tài khoản</h2>
-      <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Nhập địa chỉ ví" />
-      <button onClick={getBalance}>Xem Số Dư</button>
-      {flag2 && <p>Số dư: {balance} ETH</p>}
+      <div className="section">
+        <h2 className="section-title">Thống kê tài khoản</h2>
+        <input
+          className="text-input"
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Nhập địa chỉ ví"
+        />
+        <button onClick={getBalance}>Xem Số Dư</button>
+        {flag2 && <p>Số dư: {balance} ETH</p>}
+      </div>
 
-      <h2>Gửi Coin</h2>
-      <input type="text" value={fromAddress} onChange={(e) => setFromAddress(e.target.value)} placeholder="Địa chỉ gửi" />
-      <input type="text" value={toAddress} onChange={(e) => setToAddress(e.target.value)} placeholder="Địa chỉ nhận" />
-      <input type="text" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Số lượng" />
-      <input type="text" value={privateKey} onChange={(e) => setPrivateKey(e.target.value)} placeholder="Khóa riêng" />
-      <button onClick={sendTransaction}>Gửi</button>
+      <div className="section">
+        <h2 className="section-title">Gửi Coin</h2>
+        <input
+          className="text-input"
+          type="text"
+          value={fromAddress}
+          onChange={(e) => setFromAddress(e.target.value)}
+          placeholder="Địa chỉ gửi"
+        />
+        <input
+          className="text-input"
+          type="text"
+          value={toAddress}
+          onChange={(e) => setToAddress(e.target.value)}
+          placeholder="Địa chỉ nhận"
+        />
+        <input
+          className="text-input"
+          type="text"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Số lượng"
+        />
+        <input
+          className="text-input"
+          type="text"
+          value={privateKey}
+          onChange={(e) => setPrivateKey(e.target.value)}
+          placeholder="Khóa riêng"
+        />
+        <button onClick={sendTransaction}>Gửi</button>
+      </div>
 
-      <h2>Lịch sử giao dịch</h2>
-      <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Nhập địa chỉ ví" />
-      <button onClick={getTransactions}>Xem Lịch Sử</button>
-      <ul>
-        {transactions.map((tx) => (
-          <li key={tx.hash}>
-            {tx.hash} - {tx.value} ETH
-          </li>
-        ))}
-      </ul>
+      <div className="section">
+        <h2 className="section-title">Lịch sử giao dịch</h2>
+        <input
+          className="text-input"
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Nhập địa chỉ ví"
+        />
+        <button onClick={getTransactions}>Xem Lịch Sử</button>
+        <ul>
+          {transactions.map((tx, index) => (
+            <li key={index} className="transaction-item">
+              <span>Số lượng: 2</span>
+              <span className="transaction-hash">Hash: {tx.hash}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <h2>Staking</h2>
-      <input type="text" value={stakingAmount} onChange={(e) => setStakingAmount(e.target.value)} placeholder="Số lượng cần stake" />
-      <button onClick={stakeTokens}>Stake Tokens</button>
-      {flag && <p>Staking Balance: {stakingBalance} ETH</p>}
+      <div className="section">
+        <h2 className="section-title">Staking</h2>
+        {flag && <p>Số dư staking: {stakingBalance}</p>}
+        <input
+          className="text-input"
+          type="text"
+          value={stakingAmount}
+          onChange={(e) => setStakingAmount(e.target.value)}
+          placeholder="Số lượng staking"
+        />
+        <button onClick={stakeTokens}>Stake</button>
+      </div>
     </div>
   );
 };
